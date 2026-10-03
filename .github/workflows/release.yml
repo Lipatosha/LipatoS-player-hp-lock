@@ -1,0 +1,48 @@
+name: Build and publish LipatoS HP Lock
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - module.json
+      - scripts/**
+      - README.md
+      - CHANGELOG.md
+      - .github/workflows/release.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate
+        shell: bash
+        run: |
+          node --check scripts/main.js
+          node -e 'const m=require("./module.json"); if(m.id!=="lipatos-player-hp-lock"||!m.version) process.exit(1);'
+
+      - name: Build ZIP
+        shell: bash
+        run: |
+          zip -q -r lipatos-player-hp-lock.zip module.json scripts README.md CHANGELOG.md
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          VERSION=$(node -p 'require("./module.json").version')
+          TAG="v$VERSION"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" lipatos-player-hp-lock.zip module.json --clobber
+          else
+            gh release create "$TAG" lipatos-player-hp-lock.zip module.json \
+              --target "$GITHUB_SHA" \
+              --title "LipatoS — Запрет изменения здоровья $TAG" \
+              --notes "Foundry VTT 14 / D&D5e 6.0.5. Игроки не могут вручную изменять текущие и временные HP; автоматический урон и лечение продолжают работать."
+          fi
