@@ -1,0 +1,37 @@
+{
+  "id": "lipatos-player-hp-lock",
+  "title": "LipatoS — Запрет изменения здоровья",
+  "description": "Запрещает обычным игрокам вручную изменять текущие и временные HP персонажа, сохраняя стандартный внешний вид полей. Автоматический урон, лечение и другие системные обновления продолжают работать. ГМ и Assistant GM не ограничиваются.",
+  "version": "1.0.0",
+  "compatibility": {
+    "minimum": "14",
+    "verified": "14",
+    "maximum": "14"
+  },
+  "authors": [
+    {
+      "name": "LipatoS",
+      "url": "https://github.com/Lipatosha"
+    }
+  ],
+  "relationships": {
+    "systems": [
+      {
+        "id": "dnd5e",
+        "type": "system",
+        "compatibility": {
+          "minimum": "6.0.5",
+          "verified": "6.0.5"
+        }
+      }
+    ]
+  },
+  "esmodules": [
+    "scripts/main.js"
+  ],
+  "url": "https://github.com/Lipatosha/LipatoS-player-hp-lock",
+  "manifest": "https://github.com/Lipatosha/LipatoS-player-hp-lock/releases/latest/download/module.json",
+  "download": "https://github.com/Lipatosha/LipatoS-player-hp-lock/releases/latest/download/lipatos-player-hp-lock.zip",
+  "readme": "https://github.com/Lipatosha/LipatoS-player-hp-lock/blob/main/README.md",
+  "bugs": "https://github.com/Lipatosha/LipatoS-player-hp-lock/issues"
+}
